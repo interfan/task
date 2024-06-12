@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
+import { Task } from '../models/taskModel';
 
 interface TaskFormProps {
-  onSave: (task: { title: string; description: string; status: string }) => void;
+  addTask: (task: Task) => void;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSave }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ addTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState<'pending' | 'completed'>('pending');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title) {
-      onSave({ title, description, status });
-      setTitle('');
-      setDescription('');
+    if (!title.trim()) {
+      return; // Title is required
     }
+    addTask({ id: Date.now(), title, description, status });
+    setTitle('');
+    setDescription('');
+    setStatus('pending');
   };
 
   return (
@@ -32,11 +35,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSave }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <select value={status} onChange={(e) => setStatus(e.target.value)}>
+      <select
+        value={status}
+        onChange={(e) => setStatus(e.target.value as 'pending' | 'completed')}
+      >
         <option value="pending">Pending</option>
         <option value="completed">Completed</option>
       </select>
-      <button type="submit">Save</button>
+      <button type="submit">Add Task</button>
     </form>
   );
 };

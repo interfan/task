@@ -24,7 +24,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete }) => {
         <div>
           <input value={title} onChange={(e) => setTitle(e.target.value)} />
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <select value={status} onChange={(e) => setStatus(e.target.value as 'pending' | 'completed')}>
             <option value="pending">Pending</option>
             <option value="completed">Completed</option>
           </select>

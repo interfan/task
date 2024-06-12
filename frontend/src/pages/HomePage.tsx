@@ -34,7 +34,6 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <h1>To-Do List</h1>
-      <TaskForm onSave={handleAddTask} />
       <TaskList tasks={tasks} onUpdate={handleUpdateTask} onDelete={handleDeleteTask} />
     </div>
   );
